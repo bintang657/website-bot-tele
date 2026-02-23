@@ -3,57 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Panel Web & Bot Marketplace</title>
+    <title>Admin Bot Kimjong Store V3</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6; padding: 20px; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; }
-        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); margin-bottom: 20px; }
-        h2, h3 { margin-top: 0; }
-        label { font-weight: bold; font-size: 14px; display: block; margin-top: 10px; }
-        input, textarea { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        button { padding: 10px 15px; background-color: #0088cc; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e9ecef; padding: 20px; color: #333; }
+        .container { max-width: 700px; margin: 0 auto; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); margin-bottom: 20px; border-top: 4px solid #0088cc; }
+        h2, h3 { margin-top: 0; color: #0088cc; }
+        label { font-weight: bold; font-size: 14px; display: block; margin-top: 15px; color: #555; }
+        input, textarea, select { width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; font-family: inherit; }
+        button { padding: 12px 15px; background-color: #0088cc; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 15px; width: 100%; transition: 0.3s; }
         button:hover { background-color: #006699; }
+        .btn-success { background-color: #28a745; }
+        .btn-success:hover { background-color: #218838; }
         .btn-danger { background-color: #dc3545; }
         .btn-danger:hover { background-color: #c82333; }
-        #log { background: #222; color: #0f0; padding: 10px; height: 150px; overflow-y: scroll; font-family: monospace; font-size: 12px; border-radius: 5px; margin-top: 10px; }
-        .list-item { background: #f9f9f9; border: 1px solid #ddd; padding: 10px; margin-top: 5px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
-        .peringatan { color: #dc3545; font-size: 13px; text-align: center; font-weight: bold; }
+        .btn-warning { background-color: #ffc107; color: #333; }
+        .btn-warning:hover { background-color: #e0a800; }
+        #log { background: #222; color: #0f0; padding: 15px; height: 150px; overflow-y: scroll; font-family: monospace; font-size: 13px; border-radius: 5px; margin-top: 10px; line-height: 1.5; }
+        .list-item { background: #f8f9fa; border: 1px solid #e2e6ea; padding: 15px; margin-top: 10px; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
+        .badge { background: #0088cc; color: white; padding: 3px 8px; border-radius: 10px; font-size: 11px; margin-right: 5px; }
+        .badge-menu { background: #6f42c1; color: white; padding: 3px 8px; border-radius: 10px; font-size: 11px; margin-right: 5px; }
+        .peringatan { color: #856404; background-color: #fff3cd; padding: 10px; border-radius: 5px; font-size: 13px; text-align: center; font-weight: bold; margin-bottom: 20px; border: 1px solid #ffeeba; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h2 style="text-align: center;">Control Panel Bot (1 File)</h2>
-        <p class="peringatan">⚠️ Jangan tutup tab browser ini agar bot tetap menyala merespons pelanggan!</p>
+        <h2 style="text-align: center;">🛒 Admin Bot Kimjong Store V3</h2>
+        <p class="peringatan">⚠️ Biarkan tab browser ini tetap terbuka agar bot tetap menyala dan bisa merespons.</p>
 
         <div class="card">
-            <h3>1. Status Bot</h3>
+            <h3>1. Status Bot & Koneksi</h3>
             <label>Token Bot Telegram:</label>
-            <input type="text" id="botToken" value="8614978857:AAEn_6YWeJquoP9Qpj5XKEs9IO2BQYGUs2E">
+            <input type="text" id="botToken" placeholder="Masukkan token bot kamu di sini...">
             
             <button onclick="mulaiBot()" id="btnMulai">▶ Nyalakan Bot Sekarang</button>
             <button onclick="matikanBot()" id="btnMati" class="btn-danger" style="display:none;">⏹ Matikan Bot</button>
         </div>
 
         <div class="card">
-            <h3>2. Tambah Fitur / Menu Bot</h3>
-            <label>Perintah (Contoh: /promo atau harga):</label>
-            <input type="text" id="cmd" placeholder="Ketik perintah dari user...">
-            
-            <label>Balasan Bot:</label>
-            <textarea id="reply" rows="3" placeholder="Ketik balasan bot di sini..."></textarea>
-            
-            <button onclick="simpanFitur()" style="background-color: #28a745;">💾 Simpan ke Database Web</button>
+            <h3>2. 📢 Broadcast (Kirim Pesan Massal)</h3>
+            <p style="font-size: 12px; color: #666; margin-top: -5px;">Bot akan mengirim pesan ini ke <b id="jumlahUser">0</b> pengguna yang pernah chat.</p>
+            <textarea id="pesanBroadcast" rows="2" placeholder="Ketik pesan promosi untuk dikirim ke semua pelanggan..."></textarea>
+            <button onclick="kirimBroadcast()" class="btn-warning">📢 Kirim Pesan Massal Sekarang</button>
         </div>
 
         <div class="card">
-            <h3>3. Fitur yang Sedang Aktif</h3>
+            <h3>3. ➕ Tambah Fitur / Menu Bot</h3>
+            <p style="font-size: 12px; color: #6f42c1; font-weight: bold;">💡 Perintah yang kamu buat di sini otomatis akan menjadi Tombol Menu di Telegram pelanggan!</p>
+            
+            <label>Perintah / Nama Tombol Menu (Contoh: 📦 Katalog, 📞 Kontak):</label>
+            <input type="text" id="cmd" placeholder="Ketik kata kunci untuk tombol menu...">
+            
+            <label>Tipe Balasan:</label>
+            <select id="tipePesan" onchange="ubahFormTipe()">
+                <option value="text">Teks Saja</option>
+                <option value="image">Teks + Gambar</option>
+                <option value="button">Teks + Tombol Link Ekstra</option>
+            </select>
+
+            <div id="formGambar" style="display: none; background: #eef2f5; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                <label style="margin-top: 0;">URL Gambar (Link Foto):</label>
+                <input type="text" id="imgUrl" placeholder="Contoh: https://domain.com/foto-sepatu.jpg">
+            </div>
+
+            <div id="formTombol" style="display: none; background: #eef2f5; padding: 10px; border-radius: 5px; margin-top: 10px;">
+                <label style="margin-top: 0;">Teks Tombol Ekstra:</label>
+                <input type="text" id="btnText" placeholder="Contoh: Beli di Shopee">
+                <label>URL Tujuan Tombol:</label>
+                <input type="text" id="btnUrl" placeholder="Contoh: https://shopee.co.id/kimjongstore">
+            </div>
+            
+            <label>Isi Teks / Keterangan Balasan:</label>
+            <textarea id="reply" rows="3" placeholder="Ketik balasan bot di sini..."></textarea>
+            
+            <button onclick="simpanFitur()" class="btn-success">💾 Simpan Fitur & Perbarui Menu</button>
+        </div>
+
+        <div class="card">
+            <h3>4. 📋 Menu yang Sedang Aktif</h3>
             <div id="listFitur"></div>
         </div>
 
         <div class="card">
-            <h3>Terminal Log (Live)</h3>
-            <div id="log">Sistem siap...<br></div>
+            <h3>🖥️ Terminal Log (Live)</h3>
+            <div id="log">Sistem siap... Menunggu bot dinyalakan.<br></div>
         </div>
     </div>
 
@@ -61,72 +95,123 @@
         let botInterval;
         let lastUpdateId = 0;
 
-        // Mengambil data fitur dari LocalStorage (Database di dalam Browser)
-        let databaseFitur = JSON.parse(localStorage.getItem('database_bot_marketplace')) || [
-            { command: '/start', reply: 'Halo! Selamat datang di Marketplace kami.' }
+        // Database di LocalStorage
+        let databaseFitur = JSON.parse(localStorage.getItem('bot_marketplace_db')) || [
+            { command: '/start', type: 'text', reply: 'Halo! Selamat datang di Kimjong Store. Silakan pilih menu di bawah ini untuk melihat katalog kami.' },
+            { command: '📦 Katalog Produk', type: 'text', reply: 'Berikut adalah produk terbaik kami...' },
+            { command: '📞 Hubungi Admin', type: 'text', reply: 'Silakan hubungi admin di nomor WA: 0812xxxx' }
         ];
+        
+        let penggunaBot = JSON.parse(localStorage.getItem('bot_users_db')) || [];
+        document.getElementById('jumlahUser').innerText = penggunaBot.length;
 
-        // Fungsi Menampilkan Daftar Fitur di Web
+        function ubahFormTipe() {
+            const tipe = document.getElementById('tipePesan').value;
+            document.getElementById('formGambar').style.display = (tipe === 'image') ? 'block' : 'none';
+            document.getElementById('formTombol').style.display = (tipe === 'button') ? 'block' : 'none';
+        }
+
         function renderFitur() {
             const list = document.getElementById('listFitur');
             list.innerHTML = '';
-            if(databaseFitur.length === 0) list.innerHTML = '<p style="font-size:12px; color:#666;">Belum ada fitur ditambahkan.</p>';
+            if(databaseFitur.length === 0) list.innerHTML = '<p style="font-size:13px; color:#666; text-align:center;">Belum ada fitur ditambahkan.</p>';
             
             databaseFitur.forEach((item, index) => {
+                let badgeTipe = item.type === 'image' ? '🖼️ Gambar' : item.type === 'button' ? '🔗 Link' : '📝 Teks';
+                let tombolBadge = `<span class="badge-menu">🔘 Tombol Menu</span>`;
+                
                 list.innerHTML += `
                     <div class="list-item">
-                        <div><b>${item.command}</b> <br> <span style="font-size:12px; color:#555;">${item.reply}</span></div>
-                        <button class="btn-danger" style="width:auto; padding:5px 10px; margin:0;" onclick="hapusFitur(${index})">Hapus</button>
+                        <div style="width: 80%;">
+                            <b>${item.command}</b> ${tombolBadge} <span class="badge">${badgeTipe}</span><br> 
+                            <span style="font-size:13px; color:#555; display:block; margin-top:5px;">${item.reply}</span>
+                        </div>
+                        <button class="btn-danger" style="width:auto; padding:8px 12px; margin:0; font-size:12px;" onclick="hapusFitur(${index})">Hapus</button>
                     </div>`;
             });
         }
 
-        // Fungsi Menyimpan Fitur Baru
         function simpanFitur() {
-            const cmd = document.getElementById('cmd').value;
-            const reply = document.getElementById('reply').value;
+            const cmd = document.getElementById('cmd').value.trim();
+            const tipe = document.getElementById('tipePesan').value;
+            const reply = document.getElementById('reply').value.trim();
+            const imgUrl = document.getElementById('imgUrl').value.trim();
+            const btnText = document.getElementById('btnText').value.trim();
+            const btnUrl = document.getElementById('btnUrl').value.trim();
             
-            if(!cmd || !reply) return alert("Perintah dan Balasan harus diisi!");
+            if(!cmd || !reply) return alert("Perintah dan Isi Balasan wajib diisi!");
+            if(tipe === 'image' && !imgUrl) return alert("URL Gambar wajib diisi!");
+            if(tipe === 'button' && (!btnText || !btnUrl)) return alert("Teks dan URL Tombol wajib diisi!");
             
-            databaseFitur.push({ command: cmd, reply: reply });
-            localStorage.setItem('database_bot_marketplace', JSON.stringify(databaseFitur));
+            databaseFitur.push({ 
+                command: cmd, type: tipe, reply: reply, imgUrl: imgUrl, btnText: btnText, btnUrl: btnUrl 
+            });
+            
+            localStorage.setItem('bot_marketplace_db', JSON.stringify(databaseFitur));
             
             document.getElementById('cmd').value = '';
             document.getElementById('reply').value = '';
             
             renderFitur();
-            tulisLog(`✅ Fitur '${cmd}' berhasil ditambahkan!`);
+            tulisLog(`✅ Menu '${cmd}' berhasil ditambahkan ke Bot!`);
         }
 
-        // Fungsi Menghapus Fitur
         function hapusFitur(index) {
-            databaseFitur.splice(index, 1);
-            localStorage.setItem('database_bot_marketplace', JSON.stringify(databaseFitur));
-            renderFitur();
-            tulisLog(`🗑️ Fitur dihapus.`);
+            if(confirm("Yakin ingin menghapus menu ini?")) {
+                databaseFitur.splice(index, 1);
+                localStorage.setItem('bot_marketplace_db', JSON.stringify(databaseFitur));
+                renderFitur();
+                tulisLog(`🗑️ Menu dihapus dan keyboard diperbarui.`);
+            }
         }
 
-        // Fungsi Terminal Log
         function tulisLog(pesan) {
             const logDiv = document.getElementById('log');
-            const waktu = new Date().toLocaleTimeString();
+            const waktu = new Date().toLocaleTimeString('id-ID');
             logDiv.innerHTML += `[${waktu}] ${pesan}<br>`;
             logDiv.scrollTop = logDiv.scrollHeight;
         }
 
+        // FUNGSI UNTUK MERAKIT TOMBOL MENU BAWAH OTOMATIS
+        function buatMenuBawah() {
+            let keyboardData = [];
+            let baris = [];
+            
+            databaseFitur.forEach((fitur, index) => {
+                // Sembunyikan /start dari tombol karena itu command sistem
+                if(fitur.command.toLowerCase() !== '/start') {
+                    baris.push({ text: fitur.command });
+                }
+                
+                // Tiap baris berisi 2 tombol agar rapi
+                if (baris.length === 2 || index === databaseFitur.length - 1) {
+                    if(baris.length > 0) {
+                        keyboardData.push(baris);
+                        baris = [];
+                    }
+                }
+            });
+
+            return {
+                keyboard: keyboardData,
+                resize_keyboard: true,
+                is_persistent: true // Menu akan terus nempel di bawah
+            };
+        }
+
         // ==========================================
-        // MESIN BOT TELEGRAM (LONG POLLING)
+        // MESIN BOT TELEGRAM
         // ==========================================
 
         function mulaiBot() {
-            const token = document.getElementById('botToken').value;
-            if(!token) return alert("Token tidak boleh kosong!");
+            const token = document.getElementById('botToken').value.trim();
+            if(!token) return alert("Token Bot tidak boleh kosong!");
 
             document.getElementById('btnMulai').style.display = 'none';
             document.getElementById('btnMati').style.display = 'block';
-            tulisLog("🚀 Bot dinyalakan. Memantau pesan masuk...");
+            document.getElementById('botToken').disabled = true;
+            tulisLog("🚀 Menghubungkan ke server Telegram...");
 
-            // Cek pesan baru setiap 1.5 detik
             botInterval = setInterval(() => tarikPesan(token), 1500);
         }
 
@@ -134,7 +219,8 @@
             clearInterval(botInterval);
             document.getElementById('btnMulai').style.display = 'block';
             document.getElementById('btnMati').style.display = 'none';
-            tulisLog("🛑 Bot dimatikan.");
+            document.getElementById('botToken').disabled = false;
+            tulisLog("🛑 Bot offline. Berhenti memantau pesan.");
         }
 
         async function tarikPesan(token) {
@@ -149,39 +235,91 @@
                         if (update.message && update.message.text) {
                             const chatId = update.message.chat.id;
                             const teksUser = update.message.text;
+                            const namaUser = update.message.chat.first_name || "Pelanggan";
                             
-                            tulisLog(`💬 Pesan dari ID ${chatId}: ${teksUser}`);
+                            tulisLog(`💬 [${namaUser}]: ${teksUser}`);
 
-                            // Bot mencari jawaban di "Database"
+                            if (!penggunaBot.includes(chatId)) {
+                                penggunaBot.push(chatId);
+                                localStorage.setItem('bot_users_db', JSON.stringify(penggunaBot));
+                                document.getElementById('jumlahUser').innerText = penggunaBot.length;
+                            }
+
                             const cariFitur = databaseFitur.find(f => f.command.toLowerCase() === teksUser.toLowerCase());
 
                             if (cariFitur) {
-                                balasPesan(token, chatId, cariFitur.reply);
+                                prosesBalasan(token, chatId, cariFitur);
                             } else {
-                                balasPesan(token, chatId, "Maaf, perintah tidak dikenali oleh sistem.");
+                                prosesBalasan(token, chatId, { type: 'text', reply: "Maaf kak, menu tidak ditemukan. Silakan pilih menu yang tersedia di bawah." });
                             }
                         }
                     }
                 }
-            } catch (error) {
-                console.error("Koneksi terputus:", error);
-            }
+            } catch (error) {}
         }
 
-        async function balasPesan(token, chatId, teksBalasan) {
+        async function prosesBalasan(token, chatId, fitur) {
+            let apiUrl = `https://api.telegram.org/bot${token}/`;
+            let payload = { chat_id: chatId };
+
+            // Menempelkan Menu Keyboard di setiap balasan
+            let menuBawahDinami = buatMenuBawah();
+
+            if (fitur.type === 'image') {
+                apiUrl += 'sendPhoto';
+                payload.photo = fitur.imgUrl;
+                payload.caption = fitur.reply;
+                payload.reply_markup = menuBawahDinami;
+            } else {
+                apiUrl += 'sendMessage';
+                payload.text = fitur.reply;
+                
+                if (fitur.type === 'button') {
+                    // Telegram tidak bisa gabung inline button & keyboard bawah sekaligus dalam 1 request secara mudah.
+                    // Jadi kita prioritaskan inline button, user tetap bisa menekan tombol menu dari icon kotak di Telegram.
+                    payload.reply_markup = {
+                        inline_keyboard: [[{ text: fitur.btnText, url: fitur.btnUrl }]]
+                    };
+                } else {
+                    payload.reply_markup = menuBawahDinami;
+                }
+            }
+
             try {
-                await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                await fetch(apiUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ chat_id: chatId, text: teksBalasan })
+                    body: JSON.stringify(payload)
                 });
-                tulisLog(`🤖 Bot membalas: ${teksBalasan}`);
+                tulisLog(`🤖 Membalas dengan fitur: ${fitur.type}`);
             } catch (error) {
-                tulisLog(`❌ Gagal mengirim pesan ke ${chatId}`);
+                tulisLog(`❌ Gagal merespons ke ${chatId}`);
             }
         }
 
-        // Tampilkan fitur saat web pertama kali dibuka
+        async function kirimBroadcast() {
+            const token = document.getElementById('botToken').value.trim();
+            const pesan = document.getElementById('pesanBroadcast').value.trim();
+            
+            if(!token || !pesan) return alert("Pastikan Bot menyala dan pesan terisi!");
+            if(penggunaBot.length === 0) return alert("Belum ada pelanggan.");
+
+            if(confirm(`Kirim pesan ini ke ${penggunaBot.length} pengguna?`)) {
+                tulisLog(`📢 Memulai Broadcast...`);
+                for(let id of penggunaBot) {
+                    try {
+                        await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ chat_id: id, text: pesan, reply_markup: buatMenuBawah() })
+                        });
+                    } catch(e) {}
+                }
+                tulisLog(`✅ Broadcast selesai.`);
+                document.getElementById('pesanBroadcast').value = '';
+            }
+        }
+
         renderFitur();
     </script>
 </body>
