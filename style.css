@@ -1,0 +1,164 @@
+:root {
+    --bg-color: #fafafa;
+    --text-main: #111111;
+    --text-muted: #666666;
+    --accent: #000000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    overflow-x: hidden;
+}
+
+/* Navbar Glassmorphism */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 4rem;
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(12px); /* Efek blur premium */
+    -webkit-backdrop-filter: blur(12px);
+    z-index: 100;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -1px;
+}
+
+.cart-icon { cursor: pointer; transition: transform 0.3s ease; }
+.cart-icon:hover { transform: scale(1.1); }
+
+/* Hero Section */
+.hero {
+    text-align: center;
+    padding: 10rem 2rem 6rem;
+}
+
+.hero h1 {
+    /* Ukuran font akan otomatis menyesuaikan layar */
+    font-size: clamp(2.5rem, 5vw, 5rem); 
+    font-weight: 800;
+    letter-spacing: -2px;
+    margin-bottom: 1rem;
+}
+
+.hero p {
+    color: var(--text-muted);
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+/* Product Grid */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2.5rem;
+    padding: 2rem 4rem 6rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Product Card & Hover Effects */
+.product-card {
+    background: #ffffff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    
+    /* State awal untuk animasi scroll */
+    opacity: 0;
+    transform: translateY(40px);
+}
+
+.product-card.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.product-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+}
+
+.img-container {
+    width: 100%;
+    height: 350px;
+    overflow: hidden;
+}
+
+.product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.7s ease;
+}
+
+.product-card:hover .product-image {
+    transform: scale(1.08); /* Zoom in pelan saat di-hover */
+}
+
+.product-info {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.product-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.product-price {
+    color: var(--text-muted);
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+}
+
+.btn-add {
+    background: var(--accent);
+    color: #ffffff;
+    border: none;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.3s ease;
+}
+
+.btn-add:hover {
+    background: #333333;
+}
+
+/* Animasi sederhana saat pertama kali load */
+.slide-up {
+    animation: slideUpFade 1.2s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsif untuk HP */
+@media (max-width: 768px) {
+    .navbar { padding: 1.5rem 2rem; }
+    .product-grid { padding: 2rem; }
+}
